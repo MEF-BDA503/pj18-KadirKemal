@@ -1,0 +1,14 @@
+---
+title: "Assignment 1 - R Examples"
+author: "Kadir Kemal Dursun - BDA 503 - Fall 2017"
+date: October 16, 2018
+output: 
+  html_document:
+    theme: cosmo
+---
+
+<h3>About Myself</h3>
+My name is Kadir Kemal Dursun. As a mobile application development manager, I am managing the mobile applications in Zingat. 
+
+I am attending this master program to learn using big data in my projects. I have some idea for mobile applications and I need to learn using big data to make my projects.
+
