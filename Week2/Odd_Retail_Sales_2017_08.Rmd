@@ -1,0 +1,87 @@
+---
+title: "ODD_Retail_Sales_201608"
+author: "Kadir Kemal Dursun"
+date: "10/30/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(magrittr)
+```
+
+## Download Raw Data
+
+The raw data (excel file) has been uploaded to my github repository. First we download that file and put the data in a temp file. Then we can read that excel file into R and finally we will remove the temp file.
+
+```{r}
+
+# Create a temporary file
+tmp<-tempfile(fileext=".xlsx")
+# Download file from repository to the temp file
+download.file("https://github.com/MEF-BDA503/pj18-KadirKemal/blob/master/Week2/Odd_Retail_Sales_2017_08.xlsx?raw=true",destfile=tmp)
+# Read that excel file using readxl package's read_excel function. You might need to adjust the parameters (skip, col_names) according to your raw file's format.
+raw_data<-readxl::read_excel(tmp,skip=7,col_names=FALSE)
+# Remove the temp file
+file.remove(tmp)
+
+```
+
+## See The Raw Data
+
+You can also embed plots, for example:
+
+```{r}
+# Let's see our raw data
+head(raw_data)
+```
+
+## Remove Total Colums and Last Two Rows
+```{r}
+
+lastRowIndex = length(raw_data$X__1)-2
+raw_data = raw_data[1:lastRowIndex, c(1:7)]
+
+# Let's see our raw data
+head(raw_data)
+tail(raw_data)
+```
+
+## Set the column titles
+```{r}
+colnames(raw_data) <- c("brand_name","auto_dom","auto_imp","auto_total","comm_dom","comm_imp","comm_total")
+
+head(raw_data)
+```
+
+## Replace NA values With 0
+```{r}
+
+raw_data[is.na(raw_data)] = 0
+head(raw_data)
+
+car_data_agu_16 = raw_data
+```
+
+
+## Save Data
+```{r}
+saveRDS(car_data_agu_16,file="~/Documents/GitHub/pj18-KadirKemal/Week2/odd_car_sales_data_agu_16.rds")
+```
+
+## Find the lines that auto_total and comm_total is bigger than 0
+```{r}
+car_data_agu_16[car_data_agu_16$auto_total > 0 & car_data_agu_16$comm_total > 0,c(1,4,7)]
+```
+
+## Find average of auto_total
+```{r}
+mean(car_data_agu_16$auto_total)
+```
+
+## Summary Data
+```{r}
+summary(car_data_agu_16)
+```
+
