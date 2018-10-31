@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(magrittr)
+library(tidyverse)
 ```
 
 ## Download Raw Data
@@ -41,7 +42,7 @@ head(raw_data)
 ```{r}
 
 lastRowIndex = length(raw_data$X__1)-2
-raw_data = raw_data[1:lastRowIndex, c(1:7)]
+raw_data = raw_data[1:lastRowIndex, c(1:10)]
 
 # Let's see our raw data
 head(raw_data)
@@ -50,7 +51,7 @@ tail(raw_data)
 
 ## Set the column titles
 ```{r}
-colnames(raw_data) <- c("brand_name","auto_dom","auto_imp","auto_total","comm_dom","comm_imp","comm_total")
+colnames(raw_data) <- c("brand_name","auto_dom","auto_imp","auto_total","comm_dom","comm_imp","comm_total","total_dom","total_imp","total_total")
 
 head(raw_data)
 ```
@@ -62,6 +63,7 @@ raw_data[is.na(raw_data)] = 0
 head(raw_data)
 
 car_data_agu_16 = raw_data
+car_data_agu_16 %>% mutate(year=2016,month=8)
 ```
 
 

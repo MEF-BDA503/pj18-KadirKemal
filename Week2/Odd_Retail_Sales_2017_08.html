@@ -345,59 +345,79 @@ head(raw_data)</code></pre>
 <div id="remove-total-colums-and-last-two-rows" class="section level2">
 <h2>Remove Total Colums and Last Two Rows</h2>
 <pre class="r"><code>lastRowIndex = length(raw_data$X__1)-2
-raw_data = raw_data[1:lastRowIndex, c(1:7)]
+raw_data = raw_data[1:lastRowIndex, c(1:10)]
 
 # Let&#39;s see our raw data
 head(raw_data)</code></pre>
-<pre><code>## # A tibble: 6 x 7
-##   X__1          X__2  X__3  X__4  X__5  X__6  X__7
-##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 ALFA ROMEO      NA    31    31    NA    NA     0
-## 2 ASTON MARTIN    NA     3     3    NA    NA     0
-## 3 AUDI            NA   903   903    NA    NA     0
-## 4 BENTLEY         NA    NA     0    NA    NA     0
-## 5 BMW             NA  2230  2230    NA    NA     0
-## 6 CHERY           NA     1     1    NA    NA     0</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   X__1          X__2  X__3  X__4  X__5  X__6  X__7  X__8  X__9 X__10
+##   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 ALFA ROMEO      NA    31    31    NA    NA     0     0    31    31
+## 2 ASTON MARTIN    NA     3     3    NA    NA     0     0     3     3
+## 3 AUDI            NA   903   903    NA    NA     0     0   903   903
+## 4 BENTLEY         NA    NA     0    NA    NA     0     0     0     0
+## 5 BMW             NA  2230  2230    NA    NA     0     0  2230  2230
+## 6 CHERY           NA     1     1    NA    NA     0     0     1     1</code></pre>
 <pre class="r"><code>tail(raw_data)</code></pre>
-<pre><code>## # A tibble: 6 x 7
-##   X__1        X__2  X__3  X__4  X__5  X__6  X__7
-##   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 SUBARU        NA   103   103    NA    NA     0
-## 2 SUZUKI        NA   370   370    NA    NA     0
-## 3 TATA          NA    NA     0    NA    NA     0
-## 4 TOYOTA      2374  1104  3478    NA   549   549
-## 5 VOLKSWAGEN    NA  8438  8438    NA  2729  2729
-## 6 VOLVO         NA   203   203    NA    NA     0</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   X__1        X__2  X__3  X__4  X__5  X__6  X__7  X__8  X__9 X__10
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 SUBARU        NA   103   103    NA    NA     0     0   103   103
+## 2 SUZUKI        NA   370   370    NA    NA     0     0   370   370
+## 3 TATA          NA    NA     0    NA    NA     0     0     0     0
+## 4 TOYOTA      2374  1104  3478    NA   549   549  2374  1653  4027
+## 5 VOLKSWAGEN    NA  8438  8438    NA  2729  2729     0 11167 11167
+## 6 VOLVO         NA   203   203    NA    NA     0     0   203   203</code></pre>
 </div>
 <div id="set-the-column-titles" class="section level2">
 <h2>Set the column titles</h2>
-<pre class="r"><code>colnames(raw_data) &lt;- c(&quot;brand_name&quot;,&quot;auto_dom&quot;,&quot;auto_imp&quot;,&quot;auto_total&quot;,&quot;comm_dom&quot;,&quot;comm_imp&quot;,&quot;comm_total&quot;)
+<pre class="r"><code>colnames(raw_data) &lt;- c(&quot;brand_name&quot;,&quot;auto_dom&quot;,&quot;auto_imp&quot;,&quot;auto_total&quot;,&quot;comm_dom&quot;,&quot;comm_imp&quot;,&quot;comm_total&quot;,&quot;total_dom&quot;,&quot;total_imp&quot;,&quot;total_total&quot;)
 
 head(raw_data)</code></pre>
-<pre><code>## # A tibble: 6 x 7
-##   brand_name   auto_dom auto_imp auto_total comm_dom comm_imp comm_total
-##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-## 1 ALFA ROMEO         NA       31         31       NA       NA          0
-## 2 ASTON MARTIN       NA        3          3       NA       NA          0
-## 3 AUDI               NA      903        903       NA       NA          0
-## 4 BENTLEY            NA       NA          0       NA       NA          0
-## 5 BMW                NA     2230       2230       NA       NA          0
-## 6 CHERY              NA        1          1       NA       NA          0</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   brand_name auto_dom auto_imp auto_total comm_dom comm_imp comm_total
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1 ALFA ROMEO       NA       31         31       NA       NA          0
+## 2 ASTON MAR…       NA        3          3       NA       NA          0
+## 3 AUDI             NA      903        903       NA       NA          0
+## 4 BENTLEY          NA       NA          0       NA       NA          0
+## 5 BMW              NA     2230       2230       NA       NA          0
+## 6 CHERY            NA        1          1       NA       NA          0
+## # ... with 3 more variables: total_dom &lt;dbl&gt;, total_imp &lt;dbl&gt;,
+## #   total_total &lt;dbl&gt;</code></pre>
 </div>
 <div id="replace-na-values-with-0" class="section level2">
 <h2>Replace NA values With 0</h2>
 <pre class="r"><code>raw_data[is.na(raw_data)] = 0
 head(raw_data)</code></pre>
-<pre><code>## # A tibble: 6 x 7
-##   brand_name   auto_dom auto_imp auto_total comm_dom comm_imp comm_total
-##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-## 1 ALFA ROMEO          0       31         31        0        0          0
-## 2 ASTON MARTIN        0        3          3        0        0          0
-## 3 AUDI                0      903        903        0        0          0
-## 4 BENTLEY             0        0          0        0        0          0
-## 5 BMW                 0     2230       2230        0        0          0
-## 6 CHERY               0        1          1        0        0          0</code></pre>
-<pre class="r"><code>car_data_agu_16 = raw_data</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   brand_name auto_dom auto_imp auto_total comm_dom comm_imp comm_total
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1 ALFA ROMEO        0       31         31        0        0          0
+## 2 ASTON MAR…        0        3          3        0        0          0
+## 3 AUDI              0      903        903        0        0          0
+## 4 BENTLEY           0        0          0        0        0          0
+## 5 BMW               0     2230       2230        0        0          0
+## 6 CHERY             0        1          1        0        0          0
+## # ... with 3 more variables: total_dom &lt;dbl&gt;, total_imp &lt;dbl&gt;,
+## #   total_total &lt;dbl&gt;</code></pre>
+<pre class="r"><code>car_data_agu_16 = raw_data
+car_data_agu_16 %&gt;% mutate(year=2016,month=8)</code></pre>
+<pre><code>## # A tibble: 48 x 12
+##    brand_name auto_dom auto_imp auto_total comm_dom comm_imp comm_total
+##    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+##  1 ALFA ROMEO        0       31         31        0        0          0
+##  2 ASTON MAR…        0        3          3        0        0          0
+##  3 AUDI              0      903        903        0        0          0
+##  4 BENTLEY           0        0          0        0        0          0
+##  5 BMW               0     2230       2230        0        0          0
+##  6 CHERY             0        1          1        0        0          0
+##  7 CITROEN           0     1080       1080      131      592        723
+##  8 DACIA             0     3120       3120        0      389        389
+##  9 DS                0       34         34        0        0          0
+## 10 FERRARI           0        0          0        0        0          0
+## # ... with 38 more rows, and 5 more variables: total_dom &lt;dbl&gt;,
+## #   total_imp &lt;dbl&gt;, total_total &lt;dbl&gt;, year &lt;dbl&gt;, month &lt;dbl&gt;</code></pre>
 </div>
 <div id="save-data" class="section level2">
 <h2>Save Data</h2>
@@ -439,13 +459,20 @@ head(raw_data)</code></pre>
 ##                     Mean   : 212.7   Mean   : 911.8   Mean   :1124.5  
 ##                     3rd Qu.:   0.0   3rd Qu.:1433.8   3rd Qu.:2003.0  
 ##                     Max.   :3063.0   Max.   :8438.0   Max.   :8438.0  
-##     comm_dom         comm_imp        comm_total    
-##  Min.   :   0.0   Min.   :   0.0   Min.   :   0.0  
-##  1st Qu.:   0.0   1st Qu.:   0.0   1st Qu.:   0.0  
-##  Median :   0.0   Median :   0.0   Median :   0.0  
-##  Mean   : 186.8   Mean   : 179.4   Mean   : 366.2  
-##  3rd Qu.:   0.0   3rd Qu.: 166.5   3rd Qu.: 193.5  
-##  Max.   :4449.0   Max.   :2729.0   Max.   :4936.0</code></pre>
+##     comm_dom         comm_imp        comm_total       total_dom     
+##  Min.   :   0.0   Min.   :   0.0   Min.   :   0.0   Min.   :   0.0  
+##  1st Qu.:   0.0   1st Qu.:   0.0   1st Qu.:   0.0   1st Qu.:   0.0  
+##  Median :   0.0   Median :   0.0   Median :   0.0   Median :   0.0  
+##  Mean   : 186.8   Mean   : 179.4   Mean   : 366.2   Mean   : 399.5  
+##  3rd Qu.:   0.0   3rd Qu.: 166.5   3rd Qu.: 193.5   3rd Qu.:   0.0  
+##  Max.   :4449.0   Max.   :2729.0   Max.   :4936.0   Max.   :7014.0  
+##    total_imp        total_total      
+##  Min.   :    0.0   Min.   :    0.00  
+##  1st Qu.:    5.0   1st Qu.:    5.75  
+##  Median :  132.5   Median :  147.00  
+##  Mean   : 1091.2   Mean   : 1490.75  
+##  3rd Qu.: 1784.8   3rd Qu.: 2241.00  
+##  Max.   :11167.0   Max.   :11167.00</code></pre>
 </div>
 
 
