@@ -1,0 +1,73 @@
+---
+title: "EGM"
+author: "Kadir Kemal Dursun"
+date: "10/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(magrittr)
+library(tidyverse)
+library(lubridate)
+```
+
+## R Markdown
+
+```{r}
+
+# Create a temporary file
+tmp<-tempfile(fileext=".xlsx")
+# Download file from repository to the temp file
+download.file("https://github.com/MEF-BDA503/pj18-elmasriomer/blob/master/egm_example_data.xlsx?raw=true",destfile=tmp)
+# Read that excel file using readxl package's read_excel function. You might need to adjust the parameters (skip, col_names) according to your raw file's format.
+raw_data<-readxl::read_excel(tmp,skip=0,col_names=TRUE)
+# Remove the temp file
+file.remove(tmp)
+
+```
+
+```{r}
+head(raw_data)
+tail(raw_data)
+```
+
+
+```{r}
+k = raw_data[raw_data$pension_fund_company == 'Aegon Emeklilik ve Hayat' ,c(1,2,3)] %>% arrange(desc(n_of_participants)) 
+print(k)
+#head(k)
+
+#ggplot(data = k, aes(x = 1:nrow(k), y = n_of_participants)) + geom_line()
+
+#ggplot(data = raw_data, aes(x = n_of_participants, y = fund_size_participants)) + 
+ #   geom_point()
+```
+
+
+```{r}
+
+raw_data %>% group_by(pension_fund_company) %>% 
+
+```
+
+
+
+
+
+```{r}
+raw_data %>% rowwise() %>% mutate(date = lubridate::as_date(dmy(date))) %>% ungroup() %>% ggplot(data = ., aes(x = date, 
+    y = n_of_participants, color = pension_fund_company)) + geom_line()
+
+#%>% ggplot(data = k, aes(x = date, y = n_of_participants)) + geom_line()
+
+
+```
+
+
+```{r}
+raw_data %>% rowwise() %>% mutate(date = lubridate::as_date(dmy(date))) %>% ungroup() %>% ggplot(data = ., aes(x = date, 
+    y = size_total, color = pension_fund_company)) + geom_line()
+```
+
