@@ -48,7 +48,7 @@ print(k)
 
 ```{r}
 
-raw_data %>% group_by(pension_fund_company) %>% 
+#raw_data %>% group_by(pension_fund_company) %>% 
 
 ```
 
