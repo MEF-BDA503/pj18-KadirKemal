@@ -377,7 +377,30 @@ print(k)</code></pre>
 
 #ggplot(data = raw_data, aes(x = n_of_participants, y = fund_size_participants)) + 
  #   geom_point()</code></pre>
-<pre class="r"><code>#raw_data %&gt;% group_by(pension_fund_company) %&gt;% </code></pre>
+<pre class="r"><code>raw_data %&gt;% group_by(pension_fund_company) %&gt;% summarise(max_n_of_participants = max(n_of_participants))</code></pre>
+<pre><code>## # A tibble: 20 x 2
+##    pension_fund_company            max_n_of_participants
+##    &lt;chr&gt;                                           &lt;dbl&gt;
+##  1 Aegon Emeklilik ve Hayat                        42826
+##  2 Allianz Hayat ve Emeklilik                     118867
+##  3 Allianz Yaşam ve Emeklilik                     780983
+##  4 Anadolu Hayat Emeklilik                       1152670
+##  5 Asya Emeklilik ve Hayat                        129389
+##  6 Avivasa Emeklilik ve Hayat                     886986
+##  7 Axa Hayat ve Emeklilik                          35893
+##  8 Bereket Emeklilik ve Hayat                     124327
+##  9 BNP Paribas Cardif Emeklilik                   187408
+## 10 Cigna Finans Emeklilik ve Hayat                122997
+## 11 Fiba Emeklilik ve Hayat                         96807
+## 12 Garanti Emeklilik ve Hayat                    1211803
+## 13 Groupama Emeklilik                                 NA
+## 14 Halk Hayat ve Emeklilik                        511848
+## 15 Katılım Emeklilik ve Hayat                     205994
+## 16 Metlife Emeklilik ve Hayat                     188893
+## 17 NN Hayat ve Emeklilik                          268929
+## 18 Vakıf Emeklilik                                474386
+## 19 Vakıf Emeklilik ve Hayat                       503330
+## 20 Ziraat Hayat ve Emeklilik                      598703</code></pre>
 <pre class="r"><code>raw_data %&gt;% rowwise() %&gt;% mutate(date = lubridate::as_date(dmy(date))) %&gt;% ungroup() %&gt;% ggplot(data = ., aes(x = date, 
     y = n_of_participants, color = pension_fund_company)) + geom_line()</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
