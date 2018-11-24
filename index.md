@@ -6,3 +6,6 @@ ODD Car Sales Assignment [click here for assignment](Week2/Odd_Retail_Sales_2017
 
 ## EGM  (Nov 01, 2018)
 EGM [click here for assignment](EGM/Gokce_Omer_Kadir.html)
+
+## ODD Homework #2  (Nov 24, 2018)
+Some data playing on ODD data (odd2/odd2.html)
