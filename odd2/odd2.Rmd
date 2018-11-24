@@ -1,0 +1,95 @@
+---
+title: "CarData"
+author: "Kadir Kemal Dursun"
+date: "11/24/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library(tidyverse)
+library(dplyr)
+library(magrittr)
+library(lubridate)
+```
+
+
+## Load and Clear The Data
+```{r}
+raw_data <- readRDS("car_data_aggregate.rds")
+raw_data <- raw_data %>% filter(! (startsWith(brand_name, "ODD") | startsWith(brand_name, "TOPLAM")))
+
+```
+
+
+## 10 Best Selling Car Brands in Turkey
+
+Lets find the best selling 10 brands in Turkey. First we need to group the brands and summarize their sum of totals. After then we need to rank the data by using sum(total_total). Finally we will select 10 best selling brand and arrange them.
+
+
+```{r}
+
+raw_data %>% 
+  group_by(brand_name) %>% 
+  summarize(sum = sum(total_total))%>%
+  mutate(rank = rank(-sum)) %>%
+  filter(rank <= 10) %>%
+  arrange(rank)
+
+```
+
+## BMW Sellings in Turkey (month by month)
+
+```{r}
+
+#First filter BMW data
+bmw_data = raw_data %>% filter(brand_name == "BMW")
+
+bmw_data %>%
+  mutate(date = as.Date(paste(year, month, 1, sep='-'))) %>% 
+  ggplot(data = ., aes(x=date, y = total_total)) + 
+  labs(y = "BMW Sales", x="Months", fill="Brands") + 
+  geom_text(aes(label=total_total), vjust=-0.3, size=2.5) +
+  geom_bar(stat="identity", fill="steelblue") 
+
+```
+
+
+
+
+## Compare Montly Sales Of BMW, Mercedes and Audi
+
+```{r}
+
+#First filter these brands data
+luxury_data = raw_data %>% filter(brand_name %in% c("BMW", "MERCEDES-BENZ", "AUDI"))
+
+luxury_data %>% 
+  rowwise() %>% 
+  mutate(date = as.Date(paste(year, month, 1, sep='-'))) %>% 
+  ungroup() %>% 
+  ggplot(data = ., aes(x = date, y = total_total, color = brand_name)) + 
+  labs(y = "The Sales of Each Brands", x="Months", fill="Brands") + 
+  geom_line()
+
+```
+
+
+## Compare Annual Sales Of BMW, Mercedes and Audi
+
+```{r}
+
+luxury_data %>% 
+  group_by(brand_name, year) %>% 
+  summarize(yearly_total = sum(total_total))%>%
+  ggplot(data=., aes(x=year, y=yearly_total, fill=brand_name)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  geom_text(aes(label=yearly_total), vjust=1.4, color="white", size=3.5, position = position_dodge(0.9))+
+  labs(y = "The Sales of Each Brands", x="Years", fill="Brands") +
+  theme_minimal()
+
+```
+
