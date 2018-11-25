@@ -21,6 +21,8 @@ library(lubridate)
 raw_data <- readRDS("car_data_aggregate.rds")
 raw_data <- raw_data %>% filter(! (startsWith(brand_name, "ODD") | startsWith(brand_name, "TOPLAM")))
 
+#ASTON MARTIN and ASTON MARTİN are same brands
+raw_data$brand_name <- str_replace(raw_data$brand_name,"ASTON MARTİN","ASTON MARTIN")
 ```
 
 
@@ -42,6 +44,8 @@ raw_data %>%
 
 ## BMW Sellings in Turkey (month by month)
 
+Let's examine bmw's montly sales change. First we need to add new columns (date) for the chart. ggplot is used to draw the chart.
+
 ```{r}
 
 #First filter BMW data
@@ -61,15 +65,15 @@ bmw_data %>%
 
 ## Compare Montly Sales Of BMW, Mercedes and Audi
 
+Let's examine montly sales change of BMW, Mercedes and Audi. First we need to add new columns (date) for the chart. ggplot is used to draw the chart.
+
 ```{r}
 
 #First filter these brands data
 luxury_data = raw_data %>% filter(brand_name %in% c("BMW", "MERCEDES-BENZ", "AUDI"))
 
 luxury_data %>% 
-  rowwise() %>% 
   mutate(date = as.Date(paste(year, month, 1, sep='-'))) %>% 
-  ungroup() %>% 
   ggplot(data = ., aes(x = date, y = total_total, color = brand_name)) + 
   labs(y = "The Sales of Each Brands", x="Months", fill="Brands") + 
   geom_line()

@@ -317,7 +317,10 @@ $(document).ready(function () {
 <div id="load-and-clear-the-data" class="section level2">
 <h2>Load and Clear The Data</h2>
 <pre class="r"><code>raw_data &lt;- readRDS(&quot;car_data_aggregate.rds&quot;)
-raw_data &lt;- raw_data %&gt;% filter(! (startsWith(brand_name, &quot;ODD&quot;) | startsWith(brand_name, &quot;TOPLAM&quot;)))</code></pre>
+raw_data &lt;- raw_data %&gt;% filter(! (startsWith(brand_name, &quot;ODD&quot;) | startsWith(brand_name, &quot;TOPLAM&quot;)))
+
+#ASTON MARTIN and ASTON MARTİN are same brands
+raw_data$brand_name &lt;- str_replace(raw_data$brand_name,&quot;ASTON MARTİN&quot;,&quot;ASTON MARTIN&quot;)</code></pre>
 </div>
 <div id="best-selling-car-brands-in-turkey" class="section level2">
 <h2>10 Best Selling Car Brands in Turkey</h2>
@@ -344,6 +347,7 @@ raw_data &lt;- raw_data %&gt;% filter(! (startsWith(brand_name, &quot;ODD&quot;)
 </div>
 <div id="bmw-sellings-in-turkey-month-by-month" class="section level2">
 <h2>BMW Sellings in Turkey (month by month)</h2>
+<p>Let’s examine bmw’s montly sales change. First we need to add new columns (date) for the chart. ggplot is used to draw the chart.</p>
 <pre class="r"><code>#First filter BMW data
 bmw_data = raw_data %&gt;% filter(brand_name == &quot;BMW&quot;)
 
@@ -357,13 +361,12 @@ bmw_data %&gt;%
 </div>
 <div id="compare-montly-sales-of-bmw-mercedes-and-audi" class="section level2">
 <h2>Compare Montly Sales Of BMW, Mercedes and Audi</h2>
+<p>Let’s examine montly sales change of BMW, Mercedes and Audi. First we need to add new columns (date) for the chart. ggplot is used to draw the chart.</p>
 <pre class="r"><code>#First filter these brands data
 luxury_data = raw_data %&gt;% filter(brand_name %in% c(&quot;BMW&quot;, &quot;MERCEDES-BENZ&quot;, &quot;AUDI&quot;))
 
 luxury_data %&gt;% 
-  rowwise() %&gt;% 
   mutate(date = as.Date(paste(year, month, 1, sep=&#39;-&#39;))) %&gt;% 
-  ungroup() %&gt;% 
   ggplot(data = ., aes(x = date, y = total_total, color = brand_name)) + 
   labs(y = &quot;The Sales of Each Brands&quot;, x=&quot;Months&quot;, fill=&quot;Brands&quot;) + 
   geom_line()</code></pre>
